@@ -17,13 +17,13 @@ namespace ComplexAlgebra
     /// TODO:     - e.g. via the Equals(object) method
     public class Complex
     {
-        private double re { get; }
-        private double im { get; }
+        public double Real { get; }
+        public double Imaginary { get; }
 
-        public Complex(double re, double im)
+        public Complex(double Real, double Imaginary)
         {
-            this.re = re;
-            this.im = im;
+            this.Real = Real;
+            this.Imaginary = Imaginary;
         }
 
         private double Square(double n)
@@ -31,18 +31,49 @@ namespace ComplexAlgebra
             return n * n;
         }
 
-        public double Modulus => System.Math.Sqrt(Square(re) + Square(im));
+        public double Modulus => System.Math.Sqrt(Square(Real) + Square(Imaginary));
 
-        public double Phase => System.Math.Atan2(re, im);
+        public double Phase => System.Math.Atan2(Imaginary, Real);
 
-        public Complex Complement => new Complex(re, -im);
+        public Complex Complement() => new Complex(Real, -Imaginary);
 
-        public Complex Sum(Complex a) => new Complex(this.re + a.re, this.im + a.im);
-        public Complex Sub(Complex a) => new Complex(this.re - a.re, this.im - a.im);
+        public Complex Plus(Complex a) =>
+            new Complex(this.Real + a.Real, this.Imaginary + a.Imaginary);
+        public Complex Minus(Complex a) =>
+            new Complex(this.Real - a.Real, this.Imaginary - a.Imaginary);
+
+        public bool Equals(Complex a) => this.Real == a.Real && this.Imaginary == a.Imaginary;
 
         public override string ToString()
         {
-            return re + im;
+            if (Imaginary == 0)
+            {
+                return ($"{Real}");
+            }
+            if (Real == 0)
+            {
+                if (Imaginary == 1)
+                {
+                    return ("i");
+
+                }
+                if (Imaginary == -1)
+                {
+                    return ("-i");
+                }
+                else {
+                    return ($"{Imaginary}");
+                }
+            }
+            if (Imaginary == 1)
+            {
+                return ($"{Real} + i");
+            }
+            if (Imaginary == -1)
+            {
+                return ($"{Real} - i");
+            }
+            return ($"{Real} {Imaginary}i");
         }
     }
 }
