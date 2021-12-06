@@ -17,6 +17,32 @@ namespace ComplexAlgebra
     /// TODO:     - e.g. via the Equals(object) method
     public class Complex
     {
-        // TODO: fill this class\
+        private double re { get; }
+        private double im { get; }
+
+        public Complex(double re, double im)
+        {
+            this.re = re;
+            this.im = im;
+        }
+
+        private double Square(double n)
+        {
+            return n * n;
+        }
+
+        public double Modulus => System.Math.Sqrt(Square(re) + Square(im));
+
+        public double Phase => System.Math.Atan2(re, im);
+
+        public Complex Complement => new Complex(re, -im);
+
+        public Complex Sum(Complex a) => new Complex(this.re + a.re, this.im + a.im);
+        public Complex Sub(Complex a) => new Complex(this.re - a.re, this.im - a.im);
+
+        public override string ToString()
+        {
+            return re + im;
+        }
     }
 }
