@@ -1,3 +1,5 @@
+using System;
+
 namespace ComplexAlgebra
 {
     /// <summary>
@@ -42,7 +44,24 @@ namespace ComplexAlgebra
         public Complex Minus(Complex a) =>
             new Complex(this.Real - a.Real, this.Imaginary - a.Imaginary);
 
-        public bool Equals(Complex a) => this.Real == a.Real && this.Imaginary == a.Imaginary;
+        private bool Equals(Complex a) => this.Real.Equals(a.Real) && this.Imaginary.Equals(a.Imaginary);
+
+        public override bool Equals(object obj)
+        {
+            if(obj == null)
+            {
+                return false;
+            }
+            if(obj == this)
+            {
+                return true;
+            }
+            if(obj.GetType() != this.GetType())
+            {
+                return false;
+            }
+            return Equals((Complex)obj);
+        }
 
         public override string ToString()
         {
@@ -74,6 +93,11 @@ namespace ComplexAlgebra
                 return ($"{Real} - i");
             }
             return ($"{Real} {Imaginary}i");
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Real, Imaginary);
         }
     }
 }
